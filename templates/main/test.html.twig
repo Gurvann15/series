@@ -1,13 +1,50 @@
-<!doctype html>
-<html lang="en">
-<head>
-      <meta charset="UTF-8">
-      <meta name="viewport"
-            content="width=device-width, user-scalable=yes, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Series</title>
-</head>
-<body>
-  <h1>testounet</h1>
-</body>
-</html>
+{% extends 'base.html.twig'%}
+
+{# {{ parents() }} récupère le contenu du block qu'on est en train d'écraser #}
+{% block title %}
+    {{ parent() }} | Test
+{% endblock %}
+
+{% block body %}
+
+    <h1> Testou </h1>
+
+    <div>
+
+      <div>Cette année, on est en {{ "now" |date('Y') }}</div>
+      <div>L'année prochaine, on sera {{ "+1 year" |date('Y') }}</div>
+
+      {# Création d'une variable #}
+      {% set name = "Gus" %}
+      <h2> {{ name|upper}}</h2>
+      <div> Le nombre de lettre de mon est nom est {{ name|length}}</div>
+
+      <br>
+
+      {# Création d'un tableau de couleur #}
+      {% set colors = ["Orange", "Brown", "Turquoise", "Blue"] %}
+      <div>Le nombre de couleurs dans le tableau est de {{ colors | length }}</div>
+      <div>{{ colors | join(' / ') }}</div>
+
+      {# On inverse au contraire du foreach #}
+      {% for color in colors  %}
+          {# loop.index pour savoir le nbre de boucle & loop.last pour savoir si on est au dernier passage de la boucle #}
+          <div>{{ loop.last }}</div>
+          <div style = "background-color: {{ color }}">{{ color }}</div>
+      {% endfor %}
+
+      {# Création d'un objet#}
+      {% set book =
+          {title: "Albator",
+          year: 1986,
+          author: "Michel Diaz"}
+      %}
+      <h3>{{ book.author }}</h3>
+      {# Ce for parcourt tous les propriétés de l'objet#}
+      <div>
+          {% for key, values in book %}
+          <div>{{ key }} : {{ values }}</div>
+          {% endfor %}
+      </div>
+    </div>
+{% endblock %}
