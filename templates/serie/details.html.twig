@@ -2,9 +2,43 @@
 
 {% block title %}
 
+    {{ serie.name }} | {{ parent() }}
+
 {% endblock %}
 
 {% block body %}
-    <h2></h2>
+
+    <h2 class = titreSerie>{{ serie.name }}</h2>
+    <section class = container2>
+    <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt = "{{ serie.name }}">
+    <section class = detailsSerie>
+    <div>Categorized in: {{ serie.genres }}</div>
+    <div>Overview: {{ serie.overview }}</div>
+    <div>Aired from {{ serie.firstAirDate|date('d/m/Y') }} to {{ serie.lastAirDate|date('d/m/Y') }} </div>
+    <div>Status: {{ serie.status }}</div>
+    <div>User ratings: {{ serie.vote }} / 10</div>
+    <div>Popularity: {{ serie.popularity }}</div>
+    </section>
+    </section>
+    <section class ="seasons">
+        <h3>Seasons</h3>
+        {% for season in serie.seasons %}
+            <h2>Season {{ season.number }}</h2>
+            {%  if season.overview %}
+                <div class="seasonOverview">{{ season.overview }}</div>
+            {% endif %}
+            <article>
+                <img src="{{ asset('img/posters/seasons/' ~ season.poster ) }}" alt="{{ serie.name }} season %{{ season.number }}">
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block extrastyles %}
+    <style>
+        body{
+            background-image: linear-gradient(rgba(0, 0 , 0, 0.9), rgba(0, 0, 0, 0.7)), url("{{ asset('img/backdrops/' ~ serie.backdrop) }}");
+        }
+    </style>
 {% endblock %}
 
